@@ -1,0 +1,95 @@
+{% extends "client_base.html" %}
+
+{% block main %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Forex Trading Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h2 {
+            text-align: center;
+            color: #ffd700;
+        }
+        .card {
+            height: 600px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        {% comment %} <div class="row justify-content-center"> <!-- Center the content within the row --> {% endcomment %}
+         
+          {% comment %} <div class="content">
+            <div class="row"> {% endcomment %}
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h4 class="card-title">Live Dashboard</h4>
+                  </div>
+            <!-- TradingView Widget BEGIN -->
+            <div class="tradingview-widget-container" style="height:100%;width:100%">
+                <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px);width:100%"></div>
+                <div class="tradingview-widget-copyright"><a href="https://www.finoways.com/" rel="noopener nofollow"
+                        target="_blank"><span class="blue-text">Track all markets on Finoways</span></a></div>
+                <script type="text/javascript"
+                    src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+                        {
+                            "autosize": true,
+                                "symbol": "FOREXCOM:XAUUSD",
+                                    "interval": "D",
+                                        "timezone": "Etc/UTC",
+                                            "theme": "dark",
+                                                "style": "1",
+                                                    "locale": "en",
+                                                        "withdateranges": true,
+                                                            "hide_side_toolbar": false,
+                                                                "allow_symbol_change": true,
+                                                                    "watchlist": [
+                                                                        "FXOPEN:XAUUSD",
+                                                                        "OANDA:GBPJPY",
+                                                                        "OANDA:EURUSD",
+                                                                        "OANDA:EURJPY",
+                                                                        "OANDA:USDJPY",
+                                                                        "OANDA:GBPUSD",
+                                                                        "TVC:USOIL",
+                                                                        "OANDA:NZDUSD",
+                                                                        "BLACKBULL:US30",
+                                                                        "FX:USDCAD",
+                                                                        "TVC:DXY"
+                                                                    ],
+                                                                        "details": true,
+                                                                            "hotlist": true,
+                                                                                "calendar": false,
+                                                                                    "support_host": "https://www.tradingview.com"
+                        }
+                    </script>
+            </div>
+            <!-- TradingView Widget END -->
+        </div>
+    
+        <!-- TradingView Widget END -->
+        <!-- TradingView Market Overview Widget END -->
+    </div>
+    </div>
+    </body>
+    
+    </html>
+    
+
+{% endblock %}
