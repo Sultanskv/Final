@@ -15,16 +15,11 @@
   <style>
     .navbar-custom {
       background-color: black;
-      margin-top: auto;
-      margin-bottom: auto;
       box-shadow: 0 4px 8px rgba(245, 222, 74, 0.5);
-      height: 40;
+      transition: height 0.3s ease;
     }
 
-    .navbar-custom .navbar-brand {
-      color: gold;
-    }
-
+    .navbar-custom .navbar-brand,
     .navbar-custom .navbar-nav .nav-link {
       color: gold;
     }
@@ -40,16 +35,21 @@
       background-color: #000;
       box-shadow: 0 0 20px rgba(245, 222, 74, 0.5);
     }
-    
+
     .card-custom {
       margin-top: 20px;
       background-color: black;
       color: gold;
       box-shadow: 0 0 20px rgba(245, 222, 74, 0.5);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card-custom:hover {
+      transform: translateY(-5px);
     }
 
     .card-custom .card-header {
-      background-color: #d1c391;
+      background-color: #ffd700;
       color: black;
       border-bottom: 1px solid black;
     }
@@ -73,7 +73,7 @@
     }
 
     .power-button {
-      position: relative;
+      position: fixed;
       width: 60px;
       height: 60px;
       background-color: rgb(255, 6, 6);
@@ -83,11 +83,10 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      position: fixed;
-      margin-right: 10px;
-      left: 1280px;
       bottom: 100px;
-      transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+      right: 20px;
+      transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, width 0.3s ease, height 0.3s ease;
+      z-index: 1000;
     }
 
     .power-button.on {
@@ -128,7 +127,8 @@
     }
 
     body {
-      background-color: #1c1c1c;
+      background: linear-gradient(to bottom right, #000000, #000000);
+      background-size: cover;
       color: gold;
     }
 
@@ -142,43 +142,6 @@
       color: gold;
     }
 
-    .navbar-custom {
-      background: linear-gradient(to right, #000000, #333333);
-      box-shadow: 0 4px 8px rgba(245, 222, 74, 0.5);
-      transform: perspective(1000px) rotateX(3deg);
-      transition: transform 0.3s ease;
-      height: 60px;
-    }
-
-    .navbar-custom:hover {
-      transform: perspective(1000px) rotateX(0deg);
-    }
-
-    .navbar-custom .navbar-brand,
-    .navbar-custom .navbar-nav .nav-link {
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-    }
-
-    .card-custom {
-      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .card-custom:hover {
-      transform: translateY(-5px);
-    }
-
-    body {
-      background: linear-gradient(to bottom right, #000000, #000000);
-      background-size: cover;
-      color: gold;
-    }
-
-    .navbar-custom {
-      background-color: black;
-      padding: 10px 20px;
-    }
-
     .sidebar-bottom {
       position: fixed;
       bottom: 0;
@@ -189,6 +152,7 @@
       justify-content: space-around;
       padding: 10px 0;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+      z-index: 1000;
     }
 
     .sidebar-bottom .list-group-item {
@@ -216,11 +180,133 @@
     }
 
     .container-fluid {
-      padding-bottom: 60px; /* Ensure there's space for the bottom navbar */
+      padding-bottom: 60px;
     }
-    .table-bordered td, .table-bordered th {
-  border: 1px solid #1e1e1e;
-}
+
+    .table-bordered td,
+    .table-bordered th {
+      border: 1px solid #1e1e1e;
+    }
+
+    @media (max-width: 768px) {
+      .navbar-custom {
+        height: auto;
+        padding: 10px;
+      }
+
+      .power-button {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        right: 20px;
+      }
+
+      .power-button i {
+        font-size: 24px;
+      }
+
+      .power-button-text {
+        display: none;
+      }
+
+      .card-custom {
+        margin-top: 10px;
+        font-size: smaller;
+      }
+
+      .sidebar-bottom {
+        display: none;
+      }
+
+      .burger-menu {
+        display: block;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .navbar-custom {
+        height: auto;
+        padding: 10px 10px;
+      }
+
+      .power-button {
+        width: 40px;
+        height: 40px;
+        bottom: 10px;
+        right: 10px;
+      }
+
+      .power-button i {
+        font-size: 20px;
+      }
+
+      .power-button-text {
+        display: none;
+      }
+
+      .card-custom {
+        margin-top: 10px;
+        font-size: smaller;
+      }
+
+      .sidebar-bottom {
+        display: none;
+      }
+
+      .burger-menu {
+        display: block;
+      }
+    }
+
+    .burger-menu {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: black;
+      padding: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      text-align: center;
+    }
+
+    .burger-menu .burger-icon {
+      font-size: 24px;
+      color: gold;
+      cursor: pointer;
+    }
+
+    .burger-menu .menu-items {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .burger-menu .menu-items a {
+      color: gold;
+      padding: 10px;
+      text-decoration: none;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .burger-menu .menu-items a:hover {
+      background-color: gold;
+      color: black;
+    }
+
+    .burger-menu .menu-items.show {
+      display: flex;
+    }
+
+    .navbar-custom .center-text {
+      color: gold;
+      font-size: 1.5rem;
+      font-weight: bold;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
   </style>
 </head>
 
@@ -232,7 +318,7 @@
         <div class="container-fluid p-2">
           <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
             <img src="{% static 'finowayslogo.png' %}" width="80" height="80">
-            <span class="power-button-text">FinoFxAlgo</span>
+            <div class="center-text">FinoFxAlgo</div>
             <div class="ml-auto d-flex align-items-center">
               <a class="nav-link" href="#"><i class="fa-solid fa-bell"></i></a>
               <a class="nav-link" href="#" data-toggle="modal" data-target="#profileModal"><i
@@ -242,9 +328,9 @@
           <div class="card shadow card-custom" style="min-height: 89vh">
             <div class="card-body">
               {% block main %}
-              
-              {% endblock %}
 
+              {% endblock %}
+            </div>
           </div>
         </div>
       </div>
@@ -254,9 +340,8 @@
     <i class="fa fa-power-off"></i>
   </div>
   <span class="power-button-text"></span>
-  </div>
 
-  <div class="sidebar-bottom">
+  <div class="sidebar-bottom" id="sidebarBottom">
     <a href="{% url 'Analysis' %}" class="list-group-item list-group-item-warning list-group-item-action {% if request.path == '/Analysis/' %} active {% endif %}">
       <i class="fa-solid fa-chart-line"></i>
       <span>LIVE MARKET</span>
@@ -281,6 +366,18 @@
       <i class="fa-solid fa-handshake-angle"></i>
       <span>HELP CENTER</span>
     </a>
+  </div>
+
+  <div class="burger-menu" id="burgerMenu">
+    <div class="burger-icon" id="burgerIcon"><i class="fa-solid fa-bars"></i></div>
+    <div class="menu-items">
+      <a href="{% url 'Analysis' %}" class="{% if request.path == '/Analysis/' %} active {% endif %}">LIVE MARKET</a>
+      <a href="{% url 'client_dashboard' %}" class="{% if request.path == '/dashboard/' %} active {% endif %}">DASHBOARD</a>
+      <a href="{% url 'client_signals' %}" class="{% if request.path == '/signals/' %} active {% endif %}">SIGNALS</a>
+      <a href="{% url 'client_trade_history' %}" class="{% if request.path == '/tradehistory/' %} active {% endif %}">TRADE HISTORY</a>
+      <a href="{% url 'client_tstatus' %}" class="{% if request.path == '/tradingstatus/' %} active {% endif %}">TRADING STATUS</a>
+      <a href="{% url 'client_help_center' %}" class="{% if request.path == '/client_help_center/' %} active {% endif %}">HELP CENTER</a>
+    </div>
   </div>
 
   <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel"
@@ -337,13 +434,36 @@
       } else {
         // Turn on
         powerButton.classList.add('on');
-        powerButton.style.backgroundColor = 'red';
+        powerButton.style.backgroundColor = 'Green';
         // Store state in local storage when turning on
         localStorage.setItem('powerOn', 'true');
         // Redirect to URL when turning on
         window.location.href = "{% url 'multibank' %}";
       }
     });
+
+    // Burger menu functionality
+    const burgerMenu = document.getElementById('burgerMenu');
+    const burgerIcon = document.getElementById('burgerIcon');
+    const menuItems = burgerMenu.querySelector('.menu-items');
+
+    burgerIcon.addEventListener('click', function () {
+      menuItems.classList.toggle('show');
+    });
+
+    // Move the sidebar items to the burger menu on smaller screens
+    function handleResize() {
+      if (window.innerWidth <= 768) {
+        document.getElementById('sidebarBottom').style.display = 'none';
+        document.getElementById('burgerMenu').style.display = 'flex';
+      } else {
+        document.getElementById('sidebarBottom').style.display = 'flex';
+        document.getElementById('burgerMenu').style.display = 'none';
+      }
+    }
+
+    window.addEventListener('resize', handleResize);
+    document.addEventListener('DOMContentLoaded', handleResize);
   </script>
 </body>
 
