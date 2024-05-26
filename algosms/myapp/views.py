@@ -50,11 +50,8 @@ def client_base(request):
         else:
             # Handle the case where the client user is not found
             return redirect('client_login')
-    else:
+    else:   
         return redirect('client_login')
-
-   
-    
 
 
 
@@ -977,7 +974,7 @@ def client_dashboard(request):
                 print(error) 
 
 
-        return render(request,'client_dashboard.html',{'signals':filtered_signals})
+        return render(request,'client_dashboard.html',{'signals':filtered_signals,'client_user': client_user})
     except:
         return redirect('login')
 
@@ -1034,7 +1031,8 @@ def client_signals(request):
         today = date.today()
         signals_today = ClientSignal.objects.filter(client_id=user_id, created_at__date=today).order_by('-created_at')
 
-        dt = {
+        dt = {  
+            "client_user": client_user ,        
             "s": signals_today,
         
         }
@@ -1061,6 +1059,7 @@ def client_trade_history(request):
         total_cumulative_pl = signals_today.aggregate(total_pl=Sum('cumulative_pl'))['total_pl']
 
         dt = {
+            "client_user":client_user,
             "s": signals_today,
             "total_cumulative_pl": total_cumulative_pl
         }
@@ -1213,6 +1212,7 @@ from .forms import HelpMessageForm
 
 def client_help_center(request):
     user_id = request.session.get('user_id')
+    client_user = ClientDetail.objects.get(user_id=user_id)
     if not user_id:
         return redirect('client_login')  # Redirect to login if user_id is not in session
 
@@ -1233,7 +1233,7 @@ def client_help_center(request):
 
     messages = HelpMessage.objects.filter(user_id=client_detail)
 
-    return render(request, 'client_help_center.html', {'form': form, 'messages': messages})
+    return render(request, 'client_help_center.html', {'form': form, 'messages': messages,'client_user':client_user})
 
 
 def admin_signals(request):
@@ -1295,16 +1295,25 @@ def admin_help_center(request):
 
 def client_tstatus(request):
     try:
-        # Your existing code to get the client's IP address
+        # Get the client's IP address
         client_ip = request.META.get('REMOTE_ADDR', None)
         
-        # Your logic for client_tstatus
-        # user_id = request.session.get('user_id')
-        # clientdetail = ClientDetail.objects.filter(user_id=user_id, created_at__date=date.today()).order_by('-created_at')
+        # Get the user's ID from the session
+        user_id = request.session.get('user_id')
+        
+        # Fetch the client user details
+        client_user = ClientDetail.objects.get(user_id=user_id)
 
-        dt = {"client_ip": client_ip}
+        dt = {
+            "client_user": client_user,
+            "client_ip": client_ip
+        }
         return render(request, 'client_tstatus.html', dt)
-    except:
+    except ClientDetail.DoesNotExist:
+        return redirect('client_login')
+    except Exception as e:
+        # Log the exception here if necessary
+        print(e)
         return redirect('client_login')
     
 
@@ -1395,8 +1404,15 @@ def client_report(request):
     except Exception as e:
         print(e)
         return redirect('client_login')
-    
 
 def Analysis(request):
-    return render(request, 'Analysis.html')
+    try:
+        user_id = request.session.get('user_id')
+        client_user = ClientDetail.objects.get(user_id=user_id)
 
+        dt = {  
+            "client_user": client_user ,  
+        }
+        return render(request, 'Analysis.html')
+    except:
+        return redirect('client_login')
